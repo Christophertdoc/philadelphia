@@ -1,0 +1,16 @@
+<h1>{{ question.question_text }}</h1>
+
+{% if error_message %}
+    <p>{{ error_message }}
+{% endif %}
+
+<form action="{% url 'southPhilly:vote' question.id %}" method="post">
+    {% csrf_token %}
+    {% for choice in question.choice_set.all %}
+        <input type="radio" name="choice" id="choice{{ forLoop.counter }}" value="{{ choice.id }}">
+        <label for="choice{{ forLoop.counter }}">
+            {{ choice.choice_text }}
+        </label>
+    {% endfor %}
+    <input type="submit" value="Vote">
+</form>
